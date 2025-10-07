@@ -5,10 +5,13 @@ import random
 import logging
 import threading
 import asyncio
+import concurrent.futures
+import time
 from collections import Counter
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+from dataclasses import dataclass, field
 import json
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -36,6 +39,217 @@ from ..llm.agents import LLMManager, PersonaResult
 LOGGER = logging.getLogger(__name__)
 
 
+@dataclass
+class ConversationTurn:
+    speaker_id: int
+    message: str
+    timestamp: str
+
+
+@dataclass
+class Conversation:
+    conversation_id: str
+    participants: List[int]
+    turns: List[ConversationTurn] = field(default_factory=list)
+    is_active: bool = True
+    last_activity: datetime = field(default_factory=datetime.now)
+
+
+class ConversationManager:
+    def __init__(self, llm_manager: Optional[LLMManager], citizens: Dict[int, Citizen], save_callback: Optional[callable] = None):
+        self.llm = llm_manager
+        self.citizens = citizens
+        self.active_conversations: Dict[str, Conversation] = {}
+        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=4, thread_name_prefix="conversation")
+        self.save_callback = save_callback
+
+    def start_conversation(self, citizen_ids: List[int]) -> None:
+        if len(citizen_ids) < 2:
+            return
+        
+        # Check if any participant is already in a conversation
+        for conv in self.active_conversations.values():
+            if any(cid in conv.participants for cid in citizen_ids):
+                return  # Already conversing
+        
+        conv_id = f"conv_{'_'.join(map(str, sorted(citizen_ids)))}_{random.randint(1000, 9999)}"
+        conversation = Conversation(
+            conversation_id=conv_id,
+            participants=sorted(citizen_ids)
+        )
+        self.active_conversations[conv_id] = conversation
+        LOGGER.info(f"Starting conversation {conv_id} between citizens {citizen_ids}")
+        
+        # Start conversation thread
+        self.executor.submit(self._run_conversation, conversation)
+
+    def _run_conversation(self, conversation: Conversation) -> None:
+        try:
+            # Initial greeting from first participant
+            first_speaker = conversation.participants[0]
+            greeting = self._generate_greeting(first_speaker, conversation.participants)
+            if greeting:
+                turn = ConversationTurn(
+                    speaker_id=first_speaker,
+                    message=greeting,
+                    timestamp=datetime.now().isoformat()
+                )
+                conversation.turns.append(turn)
+                conversation.last_activity = datetime.now()
+                LOGGER.info(f"Conversation {conversation.conversation_id}: {self.citizens[first_speaker].name}: {greeting}")
+            
+            # Continue with turn-based dialogue
+            current_turn = 1
+            max_turns = 6  # Limit conversation length
+            
+            while conversation.is_active and current_turn < max_turns:
+                time.sleep(2)  # Pause between turns for realism
+                
+                # Determine next speaker (alternate)
+                speaker_idx = current_turn % len(conversation.participants)
+                speaker_id = conversation.participants[speaker_idx]
+                
+                # Generate response
+                response = self._generate_response(speaker_id, conversation)
+                if response:
+                    turn = ConversationTurn(
+                        speaker_id=speaker_id,
+                        message=response,
+                        timestamp=datetime.now().isoformat()
+                    )
+                    conversation.turns.append(turn)
+                    conversation.last_activity = datetime.now()
+                    LOGGER.info(f"Conversation {conversation.conversation_id}: {self.citizens[speaker_id].name}: {response}")
+                    
+                    # Check if conversation should end
+                    if self._should_end_conversation(conversation):
+                        break
+                else:
+                    break
+                
+                current_turn += 1
+            
+            # End conversation and update personas
+            conversation.is_active = False
+            self._update_personas_after_conversation(conversation)
+            LOGGER.info(f"Conversation {conversation.conversation_id} ended")
+            
+        except Exception as exc:
+            LOGGER.error(f"Error in conversation {conversation.conversation_id}: {exc}")
+            conversation.is_active = False
+
+    def _generate_greeting(self, speaker_id: int, participants: List[int]) -> Optional[str]:
+        if not self.llm:
+            return f"Hello {', '.join(self.citizens[pid].name for pid in participants if pid != speaker_id)}!"
+        
+        speaker = self.citizens[speaker_id]
+        others = [self.citizens[pid] for pid in participants if pid != speaker_id]
+        
+        context = f"You are {speaker.name}, {speaker.temperament}. You just encountered {', '.join(o.name for o in others)}."
+        prompt = f"{context}\n\nGenerate a natural greeting to start a conversation. Keep it brief (1-2 sentences)."
+        
+        try:
+            result = self.llm.generate_response(prompt)
+            return result.response if result else None
+        except Exception as exc:
+            LOGGER.warning(f"Failed to generate greeting: {exc}")
+            return f"Hello {', '.join(o.name for o in others)}!"
+
+    def _generate_response(self, speaker_id: int, conversation: Conversation) -> Optional[str]:
+        if not self.llm:
+            return "That's interesting!"
+        
+        speaker = self.citizens[speaker_id]
+        others = [self.citizens[pid] for pid in conversation.participants if pid != speaker_id]
+        
+        # Build conversation history
+        history = "\n".join([
+            f"{self.citizens[turn.speaker_id].name}: {turn.message}"
+            for turn in conversation.turns[-3:]  # Last 3 turns for context
+        ])
+        
+        context = f"""You are {speaker.name}, {speaker.temperament}.
+Your values: {', '.join(speaker.values)}
+Recent memories: {speaker.memories[-2:] if speaker.memories else 'None'}
+
+Conversation with: {', '.join(o.name for o in others)}
+Recent conversation:
+{history}
+
+Generate a natural response. Keep it brief (1-2 sentences)."""
+        
+        try:
+            result = self.llm.generate_response(context)
+            return result.response if result else None
+        except Exception as exc:
+            LOGGER.warning(f"Failed to generate response: {exc}")
+            return "I see."
+
+    def _should_end_conversation(self, conversation: Conversation) -> bool:
+        # Simple heuristic: end if last few turns are short or repetitive
+        if len(conversation.turns) < 3:
+            return False
+        
+        recent_turns = conversation.turns[-3:]
+        avg_length = sum(len(turn.message) for turn in recent_turns) / len(recent_turns)
+        return avg_length < 10  # Very short responses indicate conversation winding down
+
+    def _update_personas_after_conversation(self, conversation: Conversation) -> None:
+        if not self.llm or len(conversation.turns) < 2:
+            return
+        
+        # Analyze conversation and update personas
+        for participant_id in conversation.participants:
+            participant = self.citizens[participant_id]
+            
+            # Simple updates based on conversation
+            # In a more advanced system, this could use LLM analysis
+            turns_by_participant = [turn for turn in conversation.turns if turn.speaker_id == participant_id]
+            
+            if len(turns_by_participant) > 1:
+                # Participant was engaged - slightly boost relationships
+                for other_id in conversation.participants:
+                    if other_id != participant_id:
+                        # Strengthen relationship
+                        rel = next((r for r in participant.relationships if r['citizen_id'] == other_id), None)
+                        if rel:
+                            rel['strength'] = min(1.0, rel['strength'] + 0.05)
+                        else:
+                            participant.relationships.append({
+                                'citizen_id': other_id,
+                                'type': 'acquaintance',
+                                'strength': 0.3
+                            })
+                
+                # Add conversation memory (permanent, not expiring)
+                conversation_summary = f"Had a conversation with {', '.join(self.citizens[pid].name for pid in conversation.participants if pid != participant_id)}"
+                participant.memories.append({
+                    "timestamp": datetime.now().isoformat(),
+                    "summary": conversation_summary,
+                    "severity": "low",
+                    "tags": ["conversation", "social"],
+                    "expires_at": None,  # Permanent
+                    "conversation_id": conversation.conversation_id
+                })
+        
+        # Save updated personas
+        if self.save_callback:
+            self.save_callback()
+
+    def cleanup_old_conversations(self) -> None:
+        # Remove conversations that haven't been active for a while
+        cutoff = datetime.now() - timedelta(minutes=10)
+        to_remove = [
+            conv_id for conv_id, conv in self.active_conversations.items()
+            if not conv.is_active and conv.last_activity < cutoff
+        ]
+        for conv_id in to_remove:
+            del self.active_conversations[conv_id]
+
+    def get_active_conversations(self) -> List[Conversation]:
+        return list(self.active_conversations.values())
+
+
 class PopulationManager:
     """Creates citizens, households, and manages their visible agent state."""
 
@@ -50,6 +264,10 @@ class PopulationManager:
         self.city = city
         self.rng = random.Random(rng_seed)
         self.llm = llm_manager
+
+        # Reset events.json on startup
+        events_path = Path(__file__).resolve().parents[2] / "data" / "events.json"
+        events_path.write_text("[]")
 
         self.citizens: Dict[int, Citizen] = {}
         self.households: Dict[int, Household] = {}
@@ -77,7 +295,7 @@ class PopulationManager:
         self._next_household_id: int = 1
 
         # Random city events
-        self._next_random_event_time: date = date.today() + timedelta(days=self.rng.randint(2, 7))
+        self._next_random_event_time: date = date(2026, 1, 1) + timedelta(days=self.rng.randint(2, 7))
         self._city_events = [
             {"type": "theft", "description": "A theft occurred in the city.", "severity": "medium"},
             {"type": "fire", "description": "A fire broke out in a building.", "severity": "high"},
@@ -91,20 +309,29 @@ class PopulationManager:
         self.save_events()  # Wipe events.json at start
 
         self._build_population()
+        
+        # Initialize conversation manager after citizens are built
+        self.conversation_manager = ConversationManager(llm_manager, self.citizens, self.save_to_personas)
 
     # ------------------------------------------------------------------ setup
     def _load_seed_households(self) -> List[Dict[str, Any]]:
         data_dir = Path(__file__).resolve().parents[2] / "data"
         personas_path = data_dir / "personas.json"
         seed_path = data_dir / "personas_seed.json"
-        source_path = seed_path if seed_path.exists() else personas_path
+        
+        # Always reset personas.json from seed on startup
+        if seed_path.exists():
+            personas_path.write_text(seed_path.read_text())
+            source_path = personas_path
+        elif personas_path.exists():
+            source_path = personas_path
+        else:
+            return []
 
         if not source_path.exists():
             return []
         try:
             data = json.loads(source_path.read_text())
-            if not seed_path.exists() and personas_path.exists():
-                seed_path.write_text(personas_path.read_text())
         except Exception as exc:
             LOGGER.warning("Unable to load personas.json: %s", exc)
             return []
@@ -336,6 +563,7 @@ class PopulationManager:
         self._handle_births(clock)
         self._handle_random_city_events(clock)
         self._clean_expired_memories(clock)
+        self.conversation_manager.cleanup_old_conversations()
 
     def broadcast_event(self, event_summary: str, severity: str, clock: SimulationClock, event_type: str = "") -> None:
         """Broadcast events to all citizens' memories."""
@@ -403,10 +631,9 @@ class PopulationManager:
                 dy = npc1.rect.centery - npc2.rect.centery
                 dist = (dx**2 + dy**2)**0.5
                 if dist < 50:  # proximity threshold
-                    # Citizens are close, log for now
-                    LOGGER.info("Citizens %d and %d are interacting (distance: %.1f)", 
-                               npc1.citizen_id, npc2.citizen_id, dist)
-                    # TODO: Start turn-based conversation
+                    # Start conversation if not already active
+                    LOGGER.info(f"Citizens {npc1.citizen_id} and {npc2.citizen_id} are close (dist: {dist:.1f}), starting conversation")
+                    self.conversation_manager.start_conversation([npc1.citizen_id, npc2.citizen_id])
 
     def _handle_births(self, clock: SimulationClock) -> None:
         if not self.llm:

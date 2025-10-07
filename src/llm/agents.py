@@ -43,6 +43,11 @@ class CityLogOutput:
     log_entry: str
 
 
+@dataclass
+class ResponseOutput:
+    response: str
+
+
 class LLMManager:
     """Adapter around the OpenAI Agents SDK for persona generation and city logging."""
 
@@ -185,4 +190,30 @@ class LLMManager:
                 return output
         except Exception as exc:  # pragma: no cover
             LOGGER.warning("City log agent failed: %s", exc)
+        return None
+
+    # ------------------------------------------------------------------ general response
+    def generate_response(self, prompt: str) -> Optional[ResponseOutput]:
+        if self.city_agent is None or Runner is None:
+            return None
+        try:
+            # Create a temporary agent for general responses
+            response_agent = Agent(  # type: ignore[call-arg]
+                name="General Responder",
+                instructions="Provide natural, concise responses to prompts.",
+                model=self.model,
+            )
+            # Run in new event loop for threading
+            import asyncio
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                result = loop.run_until_complete(Runner.run(response_agent, prompt))  # type: ignore[arg-type]
+                output = getattr(result, "final_output", None)
+                if isinstance(output, str):
+                    return ResponseOutput(response=output)
+            finally:
+                loop.close()
+        except Exception as exc:  # pragma: no cover
+            LOGGER.warning("Response generation failed: %s", exc)
         return None
