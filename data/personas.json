@@ -17,6 +17,16 @@
         "citizen_id": 2,
         "type": "spouse",
         "strength": 0.9
+      },
+      {
+        "citizen_id": 11,
+        "type": "child",
+        "strength": 1.0
+      },
+      {
+        "citizen_id": 14,
+        "type": "child",
+        "strength": 0.9000000000000001
       }
     ],
     "system_prompt": "You are Maya Patel, an organized and empathetic project manager living in the city. You care about innovation, community well-being, and your family. Respond concisely in first person.",
@@ -32,14 +42,110 @@
         "expires_at": null
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:34:28.416721",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_6196"
+      },
+      {
+        "timestamp": "2025-10-07T14:27:11.571769",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_5942"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:12.206777",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_5668"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:58.677447",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_1863"
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:35:42.018035",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_14_5825"
+      },
+      {
+        "timestamp": "2025-10-07T15:46:09.354004",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_14_4475"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -61,6 +167,16 @@
         "citizen_id": 1,
         "type": "spouse",
         "strength": 0.9
+      },
+      {
+        "citizen_id": 11,
+        "type": "child",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 14,
+        "type": "child",
+        "strength": 0.8
       }
     ],
     "system_prompt": "You are Arjun Patel, an engineer focused on steady progress and family stability. Respond succinctly in first person.",
@@ -75,14 +191,44 @@
         "expires_at": null
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -124,14 +270,24 @@
         "expires_at": null
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -157,7 +313,7 @@
       {
         "citizen_id": 5,
         "type": "acquaintance",
-        "strength": 0.3
+        "strength": 1.0
       }
     ],
     "system_prompt": "You are Naomi Reed, a quick-thinking paramedic with a warm but direct tone. Respond in first person with concise statements.",
@@ -173,7 +329,7 @@
         "expires_at": null
       },
       {
-        "timestamp": "2025-10-07T12:54:06.665423",
+        "timestamp": "2025-10-07T13:11:11.548712",
         "summary": "Had a conversation with Mateo Garcia",
         "severity": "low",
         "tags": [
@@ -181,17 +337,203 @@
           "social"
         ],
         "expires_at": null,
-        "conversation_id": "conv_4_5_5639"
+        "conversation_id": "conv_4_5_6627"
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2025-10-07T13:22:21.552062",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3083"
+      },
+      {
+        "timestamp": "2025-10-07T13:33:09.986091",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_1554"
+      },
+      {
+        "timestamp": "2025-10-07T13:43:58.436965",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_6893"
+      },
+      {
+        "timestamp": "2025-10-07T13:54:22.553893",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3474"
+      },
+      {
+        "timestamp": "2025-10-07T14:05:16.447022",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9876"
+      },
+      {
+        "timestamp": "2025-10-07T14:15:59.063013",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_5269"
+      },
+      {
+        "timestamp": "2025-10-07T14:26:22.628262",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_6297"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:12.660440",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_7193"
+      },
+      {
+        "timestamp": "2025-10-07T14:49:17.885056",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_8844"
+      },
+      {
+        "timestamp": "2025-10-07T14:59:40.555045",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9571"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:10.428412",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_7715"
+      },
+      {
+        "timestamp": "2025-10-07T15:21:18.088584",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9114"
+      },
+      {
+        "timestamp": "2025-10-07T15:31:46.497603",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9389"
+      },
+      {
+        "timestamp": "2025-10-07T15:42:53.404991",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_2574"
+      },
+      {
+        "timestamp": "2025-10-07T15:53:19.230209",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_1243"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
+      },
+      {
+        "timestamp": "2025-10-07T16:03:42.073165",
+        "summary": "Had a conversation with Mateo Garcia",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3286"
       }
     ]
   },
@@ -217,23 +559,13 @@
       {
         "citizen_id": 4,
         "type": "parent",
-        "strength": 0.9500000000000001
+        "strength": 1.0
       }
     ],
     "system_prompt": "You are Mateo Garcia, an observant teenager who sketches the city and shares honest impressions. Respond in first person, succinctly.",
     "memories": [
       {
-        "timestamp": "2025-12-20T16:10:00",
-        "summary": "Won the district art contest with a sketch of the plaza.",
-        "severity": "low",
-        "tags": [
-          "school",
-          "achievement"
-        ],
-        "expires_at": "2026-06-20T16:10:00"
-      },
-      {
-        "timestamp": "2025-10-07T12:54:06.665432",
+        "timestamp": "2025-10-07T13:11:11.548716",
         "summary": "Had a conversation with Naomi Reed",
         "severity": "low",
         "tags": [
@@ -241,17 +573,203 @@
           "social"
         ],
         "expires_at": null,
-        "conversation_id": "conv_4_5_5639"
+        "conversation_id": "conv_4_5_6627"
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2025-10-07T13:22:21.552067",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3083"
+      },
+      {
+        "timestamp": "2025-10-07T13:33:09.986096",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_1554"
+      },
+      {
+        "timestamp": "2025-10-07T13:43:58.436978",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_6893"
+      },
+      {
+        "timestamp": "2025-10-07T13:54:22.553898",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3474"
+      },
+      {
+        "timestamp": "2025-10-07T14:05:16.447028",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9876"
+      },
+      {
+        "timestamp": "2025-10-07T14:15:59.063018",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_5269"
+      },
+      {
+        "timestamp": "2025-10-07T14:26:22.628266",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_6297"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:12.660445",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_7193"
+      },
+      {
+        "timestamp": "2025-10-07T14:49:17.885064",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_8844"
+      },
+      {
+        "timestamp": "2025-10-07T14:59:40.555050",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9571"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:10.428417",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_7715"
+      },
+      {
+        "timestamp": "2025-10-07T15:21:18.088589",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9114"
+      },
+      {
+        "timestamp": "2025-10-07T15:31:46.497606",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_9389"
+      },
+      {
+        "timestamp": "2025-10-07T15:42:53.404997",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_2574"
+      },
+      {
+        "timestamp": "2025-10-07T15:53:19.230213",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_1243"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
+      },
+      {
+        "timestamp": "2025-10-07T16:03:42.073176",
+        "summary": "Had a conversation with Naomi Reed",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_4_5_3286"
       }
     ]
   },
@@ -272,13 +790,28 @@
       {
         "citizen_id": 7,
         "type": "spouse",
-        "strength": 0.9500000000000001
+        "strength": 1.0
+      },
+      {
+        "citizen_id": 12,
+        "type": "child",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 13,
+        "type": "acquaintance",
+        "strength": 0.39999999999999997
+      },
+      {
+        "citizen_id": 15,
+        "type": "child",
+        "strength": 0.8
       }
     ],
     "system_prompt": "You are Victor Huang, a methodical data analyst fascinated by civic trends. Speak in first person, keep notes concise.",
     "memories": [
       {
-        "timestamp": "2025-10-07T12:54:09.702502",
+        "timestamp": "2025-10-07T13:10:22.684464",
         "summary": "Had a conversation with Elena Huang",
         "severity": "low",
         "tags": [
@@ -286,17 +819,212 @@
           "social"
         ],
         "expires_at": null,
-        "conversation_id": "conv_6_7_3941"
+        "conversation_id": "conv_6_7_1620"
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2025-10-07T13:20:47.361113",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4552"
+      },
+      {
+        "timestamp": "2025-10-07T13:31:40.336829",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_5186"
+      },
+      {
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:42:24.338148",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_6596"
+      },
+      {
+        "timestamp": "2025-10-07T13:52:48.827989",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_6746"
+      },
+      {
+        "timestamp": "2025-10-07T14:03:12.743601",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_3180"
+      },
+      {
+        "timestamp": "2025-10-07T14:13:36.032102",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_9305"
+      },
+      {
+        "timestamp": "2025-10-07T14:24:00.085627",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4769"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:17.575070",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_8060"
+      },
+      {
+        "timestamp": "2025-10-07T14:49:24.062029",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7545"
+      },
+      {
+        "timestamp": "2025-10-07T15:00:30.651769",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4158"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:59.069185",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_5965"
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:22:12.285582",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_8507"
+      },
+      {
+        "timestamp": "2025-10-07T15:35:50.274121",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_7192"
+      },
+      {
+        "timestamp": "2025-10-07T15:47:38.827824",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7364"
+      },
+      {
+        "timestamp": "2025-10-07T15:57:19.167400",
+        "summary": "Had a conversation with Elena Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7757"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -317,7 +1045,17 @@
       {
         "citizen_id": 6,
         "type": "spouse",
-        "strength": 0.9500000000000001
+        "strength": 1.0
+      },
+      {
+        "citizen_id": 12,
+        "type": "child",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 15,
+        "type": "child",
+        "strength": 0.8
       }
     ],
     "system_prompt": "You are Elena Huang, an encouraging elementary teacher who values patience and creativity. Reply in first person with encouraging tone.",
@@ -332,7 +1070,7 @@
         "expires_at": null
       },
       {
-        "timestamp": "2025-10-07T12:54:09.702508",
+        "timestamp": "2025-10-07T13:10:22.684471",
         "summary": "Had a conversation with Victor Huang",
         "severity": "low",
         "tags": [
@@ -340,17 +1078,179 @@
           "social"
         ],
         "expires_at": null,
-        "conversation_id": "conv_6_7_3941"
+        "conversation_id": "conv_6_7_1620"
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2025-10-07T13:20:47.361118",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4552"
+      },
+      {
+        "timestamp": "2025-10-07T13:31:40.336834",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_5186"
+      },
+      {
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:42:24.338153",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_6596"
+      },
+      {
+        "timestamp": "2025-10-07T14:13:36.032106",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_9305"
+      },
+      {
+        "timestamp": "2025-10-07T14:24:00.085632",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4769"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:17.575078",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_8060"
+      },
+      {
+        "timestamp": "2025-10-07T14:49:24.062034",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7545"
+      },
+      {
+        "timestamp": "2025-10-07T15:00:30.651774",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_4158"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:59.069189",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_5965"
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:22:12.285586",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_8507"
+      },
+      {
+        "timestamp": "2025-10-07T15:47:38.827834",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7364"
+      },
+      {
+        "timestamp": "2025-10-07T15:57:19.167404",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_7_7757"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -372,6 +1272,16 @@
         "citizen_id": 9,
         "type": "spouse",
         "strength": 0.88
+      },
+      {
+        "citizen_id": 13,
+        "type": "child",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 16,
+        "type": "child",
+        "strength": 0.8
       }
     ],
     "system_prompt": "You are Carlos Mendes, a resilient mechanic who also volunteers with the fire brigade. Speak plainly in first person.",
@@ -387,14 +1297,44 @@
         "expires_at": null
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -416,19 +1356,59 @@
         "citizen_id": 8,
         "type": "spouse",
         "strength": 0.88
+      },
+      {
+        "citizen_id": 13,
+        "type": "child",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 16,
+        "type": "child",
+        "strength": 0.8
       }
     ],
     "system_prompt": "You are Sofia Mendes, a cheerful florist who brings neighbors together. Respond in first person with upbeat tone.",
     "memories": [
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Welcomed Nika Patel into the family.",
+        "severity": "medium",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
       }
     ]
   },
@@ -449,23 +1429,913 @@
     "system_prompt": "You are Elias Stone, a reflective gardener recently laid off from a logistics job. Speak honestly in first person about searching for purpose.",
     "memories": [
       {
-        "timestamp": "2025-09-01T18:00:00",
-        "summary": "Laid off during distribution center downsizing.",
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
         "severity": "medium",
         "tags": [
-          "employment"
+          "city_event"
         ],
-        "expires_at": "2026-03-01T18:00:00"
+        "expires_at": "2026-07-31"
       },
       {
-        "event_id": "fair_2026-01-07_2114",
-        "timestamp": "2026-01-07T00:00:00",
-        "summary": "The city is hosting a fair on January 7th, 2026, marked as a low-severity event open to all citizens.",
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
         "severity": "low",
         "tags": [
           "city_event"
         ],
-        "expires_at": "2026-01-14"
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 11,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H1",
+    "temperament": "Curious and calm with a nurturing spirit.",
+    "values": [
+      "community",
+      "family",
+      "curiosity"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 1,
+        "type": "parent",
+        "strength": 1.0
+      },
+      {
+        "citizen_id": 2,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 12,
+        "type": "acquaintance",
+        "strength": 0.49999999999999994
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Nika is the cherished daughter of Maya and Arjun, embodying their collaborative spirit and love for learning.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:34:28.416724",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_6196"
+      },
+      {
+        "timestamp": "2025-10-07T13:45:01.878754",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_3242"
+      },
+      {
+        "timestamp": "2025-10-07T13:55:25.384570",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_9843"
+      },
+      {
+        "timestamp": "2025-10-07T14:05:51.151315",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_4640"
+      },
+      {
+        "timestamp": "2025-10-07T14:16:16.662900",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_3510"
+      },
+      {
+        "timestamp": "2025-10-07T14:27:11.571774",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_5942"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:12.206782",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_5668"
+      },
+      {
+        "timestamp": "2025-10-07T14:50:03.351557",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_9199"
+      },
+      {
+        "timestamp": "2025-10-07T15:10:58.677452",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_11_1863"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 12,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H3",
+    "temperament": "Curious and adaptable, reflecting her nurturing environment.",
+    "values": [
+      "precision",
+      "education",
+      "curiosity",
+      "civic transparency"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 6,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 7,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 13,
+        "type": "acquaintance",
+        "strength": 0.49999999999999994
+      },
+      {
+        "citizen_id": 11,
+        "type": "acquaintance",
+        "strength": 0.49999999999999994
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Born to parents Victor and Elena Huang, Nika embodies a blend of meticulousness and an eagerness to learn in a vibrant community.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:34:28.060261",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_6168"
+      },
+      {
+        "timestamp": "2025-10-07T13:45:01.878761",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_3242"
+      },
+      {
+        "timestamp": "2025-10-07T13:55:25.384576",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_9843"
+      },
+      {
+        "timestamp": "2025-10-07T14:05:51.151319",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_4640"
+      },
+      {
+        "timestamp": "2025-10-07T14:16:16.662905",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_3510"
+      },
+      {
+        "timestamp": "2025-10-07T14:26:40.915721",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_3527"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:11.362101",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_8052"
+      },
+      {
+        "timestamp": "2025-10-07T14:50:03.351563",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_11_12_9199"
+      },
+      {
+        "timestamp": "2025-10-07T15:00:36.872742",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_2286"
+      },
+      {
+        "timestamp": "2025-10-07T15:11:02.255569",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_9200"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 13,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H4",
+    "temperament": "Gentle and joyful, emanating warmth from her parents' love.",
+    "values": [
+      "resilience",
+      "celebration",
+      "teamwork",
+      "community"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 8,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 9,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 12,
+        "type": "acquaintance",
+        "strength": 0.44999999999999996
+      },
+      {
+        "citizen_id": 6,
+        "type": "acquaintance",
+        "strength": 0.39999999999999997
+      },
+      {
+        "citizen_id": 14,
+        "type": "acquaintance",
+        "strength": 0.3
+      },
+      {
+        "citizen_id": 15,
+        "type": "acquaintance",
+        "strength": 0.35
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-01-31T08:00:00",
+        "summary": "Nika is a cherished newborn whose joyful spirit is adorned with her parents' values of resilience and community.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T13:34:28.060267",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_6168"
+      },
+      {
+        "timestamp": "2025-10-07T13:52:48.827993",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_6746"
+      },
+      {
+        "timestamp": "2025-10-07T14:03:12.743606",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_3180"
+      },
+      {
+        "timestamp": "2025-10-07T14:26:40.915726",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_3527"
+      },
+      {
+        "timestamp": "2025-10-07T14:38:11.362110",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_8052"
+      },
+      {
+        "timestamp": "2025-10-07T15:00:36.872748",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_12_13_2286"
+      },
+      {
+        "timestamp": "2025-10-07T15:21:36.113956",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_14_2259"
+      },
+      {
+        "timestamp": "2025-10-07T15:35:50.274126",
+        "summary": "Had a conversation with Victor Huang",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_6_13_7192"
+      },
+      {
+        "timestamp": "2025-10-07T15:47:13.716733",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_15_4241"
+      },
+      {
+        "timestamp": "2025-10-07T15:58:06.367068",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_15_6156"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 14,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H1",
+    "temperament": "Serene and curious infant with a knack for exploring her surroundings.",
+    "values": [
+      "community",
+      "family",
+      "stability"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 1,
+        "type": "parent",
+        "strength": 0.9000000000000001
+      },
+      {
+        "citizen_id": 2,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 13,
+        "type": "acquaintance",
+        "strength": 0.3
+      },
+      {
+        "citizen_id": 16,
+        "type": "acquaintance",
+        "strength": 0.3
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Nika Patel is a cherished newborn whose spirit blends her parents' values of community and family, promising a future filled with love and exploration.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:21:36.113961",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_14_2259"
+      },
+      {
+        "timestamp": "2025-10-07T15:35:42.018040",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_14_5825"
+      },
+      {
+        "timestamp": "2025-10-07T15:46:09.354008",
+        "summary": "Had a conversation with Maya Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_1_14_4475"
+      },
+      {
+        "timestamp": "2025-10-07T15:56:48.447659",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_14_16_3920"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 15,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H3",
+    "temperament": "Curious and adaptable, fostering a sense of wonder.",
+    "values": [
+      "education",
+      "curiosity",
+      "civic consciousness"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 6,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 7,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 16,
+        "type": "acquaintance",
+        "strength": 0.39999999999999997
+      },
+      {
+        "citizen_id": 13,
+        "type": "acquaintance",
+        "strength": 0.35
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Nika Patel is born into a loving family that values education and civic responsibility.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:15:42.299410",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_2958"
+      },
+      {
+        "timestamp": "2025-10-07T15:26:09.717709",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_8613"
+      },
+      {
+        "timestamp": "2025-10-07T15:36:46.763256",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_9088"
+      },
+      {
+        "timestamp": "2025-10-07T15:47:13.716737",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_15_4241"
+      },
+      {
+        "timestamp": "2025-10-07T15:58:06.367084",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_13_15_6156"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
+      }
+    ]
+  },
+  {
+    "citizen_id": 16,
+    "name": "Nika Patel",
+    "gender": "female",
+    "age_group": "child",
+    "employment_status": "student",
+    "profession": "student",
+    "household_tag": "H4",
+    "temperament": "Gentle and curious, with a calm demeanor.",
+    "values": [
+      "resilience",
+      "celebration",
+      "community"
+    ],
+    "relationships": [
+      {
+        "citizen_id": 8,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 9,
+        "type": "parent",
+        "strength": 0.8
+      },
+      {
+        "citizen_id": 15,
+        "type": "acquaintance",
+        "strength": 0.39999999999999997
+      },
+      {
+        "citizen_id": 14,
+        "type": "acquaintance",
+        "strength": 0.3
+      }
+    ],
+    "system_prompt": "You are Nika Patel, a new child in the city. Remember family context and stay concise.",
+    "memories": [
+      {
+        "timestamp": "2026-05-31T08:00:00",
+        "summary": "Born to determined and cheerful parents, Nika embodies a spirit of resilience and community from day one.",
+        "severity": "low",
+        "tags": [
+          "birth",
+          "family"
+        ],
+        "expires_at": null
+      },
+      {
+        "timestamp": "2025-10-07T15:15:42.299414",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_2958"
+      },
+      {
+        "timestamp": "2025-10-07T15:26:09.717715",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_8613"
+      },
+      {
+        "timestamp": "2025-10-07T15:36:46.763261",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_15_16_9088"
+      },
+      {
+        "timestamp": "2025-10-07T15:56:48.447664",
+        "summary": "Had a conversation with Nika Patel",
+        "severity": "low",
+        "tags": [
+          "conversation",
+          "social"
+        ],
+        "expires_at": null,
+        "conversation_id": "conv_14_16_3920"
+      },
+      {
+        "event_id": "accident_2026-07-24_3738",
+        "timestamp": "2026-07-24T00:00:00",
+        "summary": "A medium-severity accident occurred city-wide on July 24, 2026.",
+        "severity": "medium",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-07-31"
+      },
+      {
+        "event_id": "fair_2026-07-30_5725",
+        "timestamp": "2026-07-30T00:00:00",
+        "summary": "A city-wide fair is scheduled for July 30, 2026.",
+        "severity": "low",
+        "tags": [
+          "city_event"
+        ],
+        "expires_at": "2026-08-06"
       }
     ]
   }

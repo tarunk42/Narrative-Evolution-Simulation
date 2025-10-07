@@ -4,6 +4,328 @@
     "type": "fair",
     "description": "A fair is being held in the city.",
     "severity": "low",
-    "log_entry": "On January 7, 2026, a fair will be held city-wide. This event is expected to be a low-severity occasion, promoting community engagement."
+    "log_entry": "On January 7, 2026, a low-severity fair will be held city-wide, aiming to bring residents together in celebration and community spirit."
+  },
+  {
+    "date": "2026-01-12",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On 2026-01-12, a theft occurred in the city, categorized as medium severity. No citizens were directly involved."
+  },
+  {
+    "date": "2026-01-18",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On January 18, 2026, a city-wide protest took place as citizens gathered to voice their concerns. The event was classified as medium-severity."
+  },
+  {
+    "date": "2026-01-23",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On January 23, 2026, a festival will be celebrated city-wide. This event is anticipated to be a joyous occasion with a low level of significance."
+  },
+  {
+    "date": "2026-01-26",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "On January 26, 2026, a fair will take place city-wide. The event is categorized as low severity and aims to foster community engagement."
+  },
+  {
+    "date": "2026-01-28",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "Event Type: Fair\nDate: 2026-01-28\nLocation: City-wide\nDescription: A fair is being held in the city.\nSeverity: Low\nInvolved Citizens: None."
+  },
+  {
+    "date": "2026-02-01",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On 2026-02-01, a theft occurred city-wide, classified as medium severity. No specific citizens were identified as involved."
+  },
+  {
+    "date": "2026-02-03",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On 2026-02-03, a theft occurred in the city, categorized as medium severity."
+  },
+  {
+    "date": "2026-02-10",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "Event Type: Protest | Date: 2026-02-10 | Location: City-wide | Description: Citizens are protesting in the city. | Severity: Medium | Involved Citizens: None"
+  },
+  {
+    "date": "2026-02-16",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "On February 16, 2026, a fair will take place city-wide. This event is classified as low severity and is expected to engage the community in various activities."
+  },
+  {
+    "date": "2026-02-21",
+    "type": "fire",
+    "description": "A fire broke out in a building.",
+    "severity": "high",
+    "log_entry": "Event Type: Fire\nDate: 2026-02-21\nLocation: City-wide\nDescription: A fire broke out in a building.\nSeverity: High\nInvolved Citizens: None"
+  },
+  {
+    "date": "2026-02-23",
+    "type": "fire",
+    "description": "A fire broke out in a building.",
+    "severity": "high",
+    "log_entry": "On February 23, 2026, a high-severity fire broke out in a building city-wide. There were no reports of involved citizens."
+  },
+  {
+    "date": "2026-02-26",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On February 26, 2026, a city-wide festival was held, celebrating community spirit with various activities. The event had a low severity level and involved no specific citizens."
+  },
+  {
+    "date": "2026-03-02",
+    "type": "celebration",
+    "description": "A celebration is taking place.",
+    "severity": "low",
+    "log_entry": "Event Type: Celebration | Date: 2026-03-02 | Location: City-wide | Description: A celebration is taking place. | Severity: Low | Involved Citizens: None."
+  },
+  {
+    "date": "2026-03-04",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On March 4, 2026, a low-severity festival took place city-wide, celebrating community spirit."
+  },
+  {
+    "date": "2026-03-11",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On March 11, 2026, an accident took place on the streets of the city, classified as medium severity. No citizens were reported to be involved."
+  },
+  {
+    "date": "2026-03-16",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On March 16, 2026, an accident happened on the streets city-wide, classified as medium severity. No citizens were reported as involved."
+  },
+  {
+    "date": "2026-03-20",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On March 20, 2026, a city-wide festival will be celebrated. The event is characterized as low severity, and there are no specific citizens noted as involved."
+  },
+  {
+    "date": "2026-03-24",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On March 24, 2026, a medium severity accident took place on the streets city-wide. No citizens were reported as involved."
+  },
+  {
+    "date": "2026-03-30",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On March 30, 2026, a medium-severity protest took place city-wide, with citizens actively participating and voicing their concerns."
+  },
+  {
+    "date": "2026-04-01",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On April 1, 2026, citizens engaged in a city-wide protest to voice their concerns, classified as a medium-severity event."
+  },
+  {
+    "date": "2026-04-03",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On April 3, 2026, citizens participated in a city-wide protest to voice their grievances, categorized as a medium severity event."
+  },
+  {
+    "date": "2026-04-05",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "Event Type: Fair\nDate: 2026-04-05\nLocation: City-wide\nDescription: A fair is being held in the city.\nSeverity: Low\nInvolved Citizens: None"
+  },
+  {
+    "date": "2026-04-09",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On April 9, 2026, there was a medium-severity accident reported on the streets throughout the city. No citizens were reported to be involved."
+  },
+  {
+    "date": "2026-04-15",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "Date: 2026-04-15\nEvent Type: Theft\nLocation: City-wide\nDescription: A theft occurred in the city.\nSeverity: Medium"
+  },
+  {
+    "date": "2026-04-21",
+    "type": "fire",
+    "description": "A fire broke out in a building.",
+    "severity": "high",
+    "log_entry": "On April 21, 2026, a high-severity fire occurred in a building across the city, leading to immediate action from emergency services. Fortunately, there were no involved citizens reported."
+  },
+  {
+    "date": "2026-04-23",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On April 23, 2026, an accident took place on the streets city-wide, resulting in medium severity impacts. No citizens were reported to be involved."
+  },
+  {
+    "date": "2026-04-27",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On April 27, 2026, a theft was reported city-wide, classified as medium severity. No citizens were involved directly in this incident."
+  },
+  {
+    "date": "2026-05-01",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On May 1, 2026, the city will celebrate a festival that spans across various locations city-wide. The event is categorized as low severity and currently has no involved citizens reported."
+  },
+  {
+    "date": "2026-05-06",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On May 6, 2026, citizens participated in a city-wide protest with medium severity, voicing their concerns and demands."
+  },
+  {
+    "date": "2026-05-12",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On May 12, 2026, a theft occurred in the city, classified as medium severity. The incident was noted to be city-wide."
+  },
+  {
+    "date": "2026-05-19",
+    "type": "celebration",
+    "description": "A celebration is taking place.",
+    "severity": "low",
+    "log_entry": "On May 19, 2026, a celebration will take place city-wide. The event is classified as low severity and currently does not involve any citizens."
+  },
+  {
+    "date": "2026-05-22",
+    "type": "celebration",
+    "description": "A celebration is taking place.",
+    "severity": "low",
+    "log_entry": "On May 22, 2026, a city-wide celebration is set to take place, characterized as a low-severity event. There are no reported involved citizens."
+  },
+  {
+    "date": "2026-05-29",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "Date: 2026-05-29 | Event: Theft | Location: City-wide | Severity: Medium | Description: A theft occurred in the city."
+  },
+  {
+    "date": "2026-06-05",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "On June 5, 2026, a fair will be held city-wide. This low-severity event aims to bring together residents for a day of festivities."
+  },
+  {
+    "date": "2026-06-11",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On June 11, 2026, a theft occurred across the city, classified as medium severity. No citizens were directly involved."
+  },
+  {
+    "date": "2026-06-14",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On June 14, 2026, a medium-severity protest occurred city-wide, where citizens expressed their grievances."
+  },
+  {
+    "date": "2026-06-17",
+    "type": "theft",
+    "description": "A theft occurred in the city.",
+    "severity": "medium",
+    "log_entry": "On June 17, 2026, a theft occurred across the city, classified as medium severity. No citizens were reported as involved."
+  },
+  {
+    "date": "2026-06-23",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On June 23, 2026, a medium-severity accident took place on the streets, affecting various areas of the city. No citizens were reported to be involved."
+  },
+  {
+    "date": "2026-06-28",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On June 28, 2026, a medium-severity accident happened on the streets city-wide, though no citizens were reported as involved."
+  },
+  {
+    "date": "2026-07-05",
+    "type": "protest",
+    "description": "Citizens are protesting in the city.",
+    "severity": "medium",
+    "log_entry": "On July 5, 2026, citizens engaged in a city-wide protest, expressing their concerns and demands. The severity of the event was classified as medium."
+  },
+  {
+    "date": "2026-07-10",
+    "type": "fire",
+    "description": "A fire broke out in a building.",
+    "severity": "high",
+    "log_entry": "Date: 2026-07-10\nEvent: Fire\nLocation: City-wide\nDescription: A fire broke out in a building.\nSeverity: High\nInvolved Citizens: None reported."
+  },
+  {
+    "date": "2026-07-14",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On July 14, 2026, a city-wide festival was celebrated, bringing together citizens for a day of festivities. The event had a low severity rating and involved no specific citizens."
+  },
+  {
+    "date": "2026-07-16",
+    "type": "festival",
+    "description": "A festival is celebrated in the city.",
+    "severity": "low",
+    "log_entry": "On 2026-07-16, a low-severity festival is celebrated throughout the city, bringing together citizens in a day of merriment and festivities."
+  },
+  {
+    "date": "2026-07-20",
+    "type": "fire",
+    "description": "A fire broke out in a building.",
+    "severity": "high",
+    "log_entry": "On July 20, 2026, a fire of high severity erupted in a building, impacting the entire city."
+  },
+  {
+    "date": "2026-07-24",
+    "type": "accident",
+    "description": "An accident happened on the streets.",
+    "severity": "medium",
+    "log_entry": "On July 24, 2026, an accident was reported on the streets across the city, classified as medium severity. No citizens were reported as involved."
+  },
+  {
+    "date": "2026-07-30",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "On July 30, 2026, a fair will be held city-wide, marking a community event with low severity impact."
   }
 ]

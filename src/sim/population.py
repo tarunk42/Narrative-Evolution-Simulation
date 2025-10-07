@@ -565,6 +565,25 @@ class PopulationManager:
         self._clean_expired_memories(clock)
         self.conversation_manager.cleanup_old_conversations()
 
+    def _check_interactions(self) -> None:
+        """Check for NPC interactions and start conversations."""
+        active_npcs = list(self._active_sprites.values())
+        
+        # Check each pair of NPCs
+        for i, npc1 in enumerate(active_npcs):
+            for npc2 in active_npcs[i+1:]:
+                if npc1.citizen.citizen_id == npc2.citizen.citizen_id:
+                    continue
+                
+                # Check if they are close enough (within 2 tiles)
+                dx = abs(npc1.position.x - npc2.position.x)
+                dy = abs(npc1.position.y - npc2.position.y)
+                if dx <= 2 and dy <= 2:
+                    # Close enough, start conversation if not already conversing
+                    citizen_ids = [npc1.citizen.citizen_id, npc2.citizen.citizen_id]
+                    self.conversation_manager.start_conversation(citizen_ids)
+                    break  # Only start one conversation per NPC per update
+
     def broadcast_event(self, event_summary: str, severity: str, clock: SimulationClock, event_type: str = "") -> None:
         """Broadcast events to all citizens' memories."""
         expires_at = clock.current_date + timedelta(days=7)
@@ -587,6 +606,28 @@ class PopulationManager:
                 memory for memory in citizen.memories
                 if memory.get("expires_at") is None or self._parse_expires_date(memory["expires_at"]) > current_time
             ]
+
+    def _handle_random_city_events(self, clock: SimulationClock) -> None:
+        """Handle random city events that occur over time."""
+        if clock.current_date >= self._next_random_event_time:
+            # Time for a random event
+            event = self.rng.choice(self._city_events)
+            event_entry = {
+                "date": clock.current_date.isoformat(),
+                "type": event["type"],
+                "description": event["description"],
+                "severity": event["severity"],
+                "log_entry": f"On {clock.current_date.strftime('%B %d, %Y')}, {event['description']} This event is expected to be a {event['severity']}-severity occasion."
+            }
+            self.events_log.append(event_entry)
+            self.save_events()
+            
+            # Broadcast to citizens
+            self.broadcast_event(event["description"], event["severity"], clock, event["type"])
+            
+            # Schedule next event
+            days_until_next = self.rng.randint(2, 14)  # 2-14 days
+            self._next_random_event_time = clock.current_date + timedelta(days=days_until_next)
 
     def _parse_expires_date(self, expires_str: str) -> date:
         try:
@@ -860,6 +901,31 @@ class PopulationManager:
 
     def recent_birth_logs(self) -> List[str]:
         return list(self._recent_birth_events)
+
+    def recent_events(self) -> List[str]:
+        """Get recent events for dashboard display."""
+        events = []
+        
+        # Add recent birth events
+        events.extend(self._recent_birth_events[-3:])  # Last 3 birth events
+        
+        # Add recent city events from events_log
+        for event in self.events_log[-3:]:  # Last 3 city events
+            events.append(f"{event.get('date', 'Unknown')}: {event.get('description', 'Unknown event')}")
+        
+        # Add active conversations
+        for conv in list(self.conversation_manager.active_conversations.values())[-3:]:  # Last 3 active conversations
+            if conv.turns:
+                participants = [self.citizens[pid].name for pid in conv.participants]
+                last_turn = conv.turns[-1]
+                speaker = self.citizens[last_turn.speaker_id].name
+                events.append(f"Conversation: {speaker} speaking to {', '.join(p for p in participants if p != speaker)}")
+        
+        # If no events, add a placeholder
+        if not events:
+            events.append("No recent events")
+        
+        return events[-10:]  # Return last 10 events
 
     # ---------------------------------------------------------------- births
     def _household_can_have_child(self, household: Household) -> bool:

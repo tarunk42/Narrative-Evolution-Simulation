@@ -159,7 +159,7 @@ class Application:
             "city_metrics": city_metrics,
             "population_metrics": population_metrics,
             "citizens": self.population.citizen_summaries(),
-            "events": self.population.recent_birth_logs(),
+            "events": self.population.recent_events(),
         }
         try:
             with open(self.dashboard_data_file, 'w') as f:

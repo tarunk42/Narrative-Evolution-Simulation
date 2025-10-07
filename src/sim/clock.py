@@ -11,7 +11,7 @@ class SimulationClock:
     def __init__(
         self,
         *,
-        minutes_per_second: float = 120.0,
+        minutes_per_second: float = 720.0,
         start_date: date | None = None,
         start_minutes: float = 8 * 60,
     ) -> None:
