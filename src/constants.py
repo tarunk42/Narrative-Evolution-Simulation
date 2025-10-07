@@ -1,0 +1,10 @@
+ROAD_N = 1
+ROAD_E = 2
+ROAD_S = 4
+ROAD_W = 8
+ROAD_BITS = (ROAD_N, ROAD_E, ROAD_S, ROAD_W)
+
+ROAD_TYPES = {"R", "S"}
+WATER_TYPES = {"W"}
+PARK_TYPES = {"P"}
+PLAZA_TYPES = {"L"}

@@ -1,0 +1,11 @@
+{
+  "H": {"name": "Residential", "color": "#C4CDD6"},
+  "C": {"name": "Commercial", "color": "#D6B386"},
+  "O": {"name": "Offices", "color": "#99B8CC"},
+  "I": {"name": "Industrial", "color": "#A29C8A"},
+  "P": {"name": "Parks", "color": "#4A8A58"},
+  "L": {"name": "Plaza", "color": "#BDAF9E"},
+  "W": {"name": "Water", "color": "#3893BF"},
+  "R": {"name": "Arterial Road", "color": "#3A2E38"},
+  "S": {"name": "Local Road", "color": "#4A3C48"}
+}

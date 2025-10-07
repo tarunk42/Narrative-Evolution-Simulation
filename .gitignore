@@ -1,0 +1,34 @@
+# .gitignore
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+# Ignore virtual environment directories
+venv/
+env/
+.venv/
+# Ignore IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+# Ignore system files
+.DS_Store
+Thumbs.db
+# Ignore log files
+*.log
+# Ignore distribution/build directories
+build/
+dist/
+*.egg-info/
+# Ignore coverage reports
+htmlcov/
+.coverage
+.coverage.*
+# Ignore test output
+nosetests.xml
+coverage.xml
+*.cover
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Ignore local configuration files
+config.yaml
