@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from typing import Dict, List, Optional
+import json
+from pathlib import Path
 
 import pygame
 from pygame.math import Vector2
@@ -14,7 +16,6 @@ from .sim.persona import EmploymentStatus
 from .sim.population import PopulationManager
 from .ui.controls import ControlBindings
 from .ui.hud import HeadsUpDisplay
-from .ui.dashboard_window import DashboardWindow
 from .llm.agents import LLMManager
 
 
@@ -39,7 +40,6 @@ class Application:
         overlay_font = pygame.font.SysFont("Menlo", max(72, settings.WORLD.tile_size * 3))
         self.zone_overlay = self.city.create_zone_overlay(overlay_font)
         self.inspect_font = pygame.font.SysFont("Menlo", 14)
-        self.dashboard_window = DashboardWindow(width=420, height=400)
 
         self.llm_manager = LLMManager()
         self.population = PopulationManager(
@@ -47,6 +47,7 @@ class Application:
             llm_manager=self.llm_manager,
         )
 
+        self.dashboard_data_file = Path(__file__).parent.parent / "dashboard_data.json"
         self.show_info_panel = True
         self.show_city_metrics = False
         self.show_population_metrics = False
@@ -61,7 +62,6 @@ class Application:
             self._update(dt)
             self._draw()
 
-        self.dashboard_window.close()
         pygame.quit()
 
     def _handle_events(self) -> None:
@@ -152,14 +152,20 @@ class Application:
             city_metrics=city_metrics,
             population_metrics=population_metrics,
         )
-        self.dashboard_window.update(
-            time_str=time_str,
-            date_str=date_str,
-            city_metrics=city_metrics,
-            population_metrics=population_metrics,
-            citizens=self.population.citizen_summaries(),
-            events=self.population.recent_birth_logs(),
-        )
+        # Write dashboard data to file for web dashboard
+        dashboard_data = {
+            "time_str": time_str,
+            "date_str": date_str,
+            "city_metrics": city_metrics,
+            "population_metrics": population_metrics,
+            "citizens": self.population.citizen_summaries(),
+            "events": self.population.recent_birth_logs(),
+        }
+        try:
+            with open(self.dashboard_data_file, 'w') as f:
+                json.dump(dashboard_data, f)
+        except Exception as e:
+            print(f"Failed to write dashboard data: {e}")
         pygame.display.flip()
 
     def _build_city_metrics_lines(self) -> List[str]:
