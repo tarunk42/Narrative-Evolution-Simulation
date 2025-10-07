@@ -1,0 +1,9 @@
+[
+  {
+    "date": "2026-01-01",
+    "type": "fair",
+    "description": "A fair is being held in the city.",
+    "severity": "low",
+    "log_entry": "On January 1, 2026, a fair will take place city-wide, fostering community spirit."
+  }
+]

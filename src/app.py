@@ -14,6 +14,8 @@ from .sim.persona import EmploymentStatus
 from .sim.population import PopulationManager
 from .ui.controls import ControlBindings
 from .ui.hud import HeadsUpDisplay
+from .ui.dashboard_window import DashboardWindow
+from .llm.agents import LLMManager
 
 
 class Application:
@@ -37,8 +39,13 @@ class Application:
         overlay_font = pygame.font.SysFont("Menlo", max(72, settings.WORLD.tile_size * 3))
         self.zone_overlay = self.city.create_zone_overlay(overlay_font)
         self.inspect_font = pygame.font.SysFont("Menlo", 14)
+        self.dashboard_window = DashboardWindow(width=420, height=400)
 
-        self.population = PopulationManager(self.city, target_population=settings.WORLD.npc_count)
+        self.llm_manager = LLMManager()
+        self.population = PopulationManager(
+            self.city,
+            llm_manager=self.llm_manager,
+        )
 
         self.show_info_panel = True
         self.show_city_metrics = False
@@ -54,6 +61,7 @@ class Application:
             self._update(dt)
             self._draw()
 
+        self.dashboard_window.close()
         pygame.quit()
 
     def _handle_events(self) -> None:
@@ -124,6 +132,8 @@ class Application:
 
         city_metrics = self._build_city_metrics_lines()
         population_metrics = self._build_population_metrics_lines()
+        time_str = self.sim_clock.formatted_time()
+        date_str = self.sim_clock.formatted_date()
 
         inspection = self._gather_inspection()
         if inspection:
@@ -137,10 +147,18 @@ class Application:
             npc_count=self.population.active_commuters(),
             zoom=self.camera.zoom,
             paused=self.paused,
-            clock_time=self.sim_clock.formatted_time(),
-            clock_date=self.sim_clock.formatted_date(),
+            clock_time=time_str,
+            clock_date=date_str,
             city_metrics=city_metrics,
             population_metrics=population_metrics,
+        )
+        self.dashboard_window.update(
+            time_str=time_str,
+            date_str=date_str,
+            city_metrics=city_metrics,
+            population_metrics=population_metrics,
+            citizens=self.population.citizen_summaries(),
+            events=self.population.recent_birth_logs(),
         )
         pygame.display.flip()
 

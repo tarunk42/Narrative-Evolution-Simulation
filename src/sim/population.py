@@ -2,8 +2,18 @@ from __future__ import annotations
 
 import itertools
 import random
+import logging
+import threading
+import asyncio
 from collections import Counter
-from typing import Dict, List, Optional, Tuple
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+import json
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+import json
 
 import pygame
 
@@ -20,6 +30,10 @@ from .persona import (
     Household,
     Profession,
 )
+from ..llm.agents import LLMManager, PersonaResult
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 class PopulationManager:
@@ -27,10 +41,15 @@ class PopulationManager:
 
     RESIDENTIAL_CAPACITY_PER_TILE = 6
 
-    def __init__(self, city: City, target_population: int = 150, rng_seed: int = 1337) -> None:
+    def __init__(
+        self,
+        city: City,
+        rng_seed: int = 1337,
+        llm_manager: Optional[LLMManager] = None,
+    ) -> None:
         self.city = city
         self.rng = random.Random(rng_seed)
-        self.target_population = max(1, target_population)
+        self.llm = llm_manager
 
         self.citizens: Dict[int, Citizen] = {}
         self.households: Dict[int, Household] = {}
@@ -39,6 +58,8 @@ class PopulationManager:
         self.job_assignments: Dict[Tuple[int, int], List[int]] = {}
         self.student_capacity: Dict[Tuple[int, int], int] = {}
         self.student_assignments: Dict[Tuple[int, int], List[int]] = {}
+        self._unused_job_slots: List[Tuple[Tuple[int, int], Profession]] = []
+        self._unused_student_slots: List[Tuple[Tuple[int, int], Profession]] = []
 
         self._citizen_stage: Dict[int, DailyStage] = {}
         self._active_sprites: Dict[int, NPC] = {}
@@ -47,9 +68,124 @@ class PopulationManager:
         self._gender_cycle = itertools.cycle([Gender.MALE, Gender.FEMALE])
         self._name_cycle = itertools.cycle(_FIRST_NAMES)
 
+        self._seed_households = self._load_seed_households()
+
+        self.household_birth_record: Dict[int, date] = {}
+        self._last_birth_check_date: Optional[date] = None
+        self._recent_birth_events: List[str] = []
+        self._next_generated_id: int = 1
+        self._next_household_id: int = 1
+
+        # Random city events
+        self._next_random_event_time: date = date.today() + timedelta(days=self.rng.randint(2, 7))
+        self._city_events = [
+            {"type": "theft", "description": "A theft occurred in the city.", "severity": "medium"},
+            {"type": "fire", "description": "A fire broke out in a building.", "severity": "high"},
+            {"type": "fair", "description": "A fair is being held in the city.", "severity": "low"},
+            {"type": "festival", "description": "A festival is celebrated in the city.", "severity": "low"},
+            {"type": "accident", "description": "An accident happened on the streets.", "severity": "medium"},
+            {"type": "protest", "description": "Citizens are protesting in the city.", "severity": "medium"},
+            {"type": "celebration", "description": "A celebration is taking place.", "severity": "low"},
+        ]
+        self.events_log: List[Dict[str, Any]] = []
+        self.save_events()  # Wipe events.json at start
+
         self._build_population()
 
     # ------------------------------------------------------------------ setup
+    def _load_seed_households(self) -> List[Dict[str, Any]]:
+        data_dir = Path(__file__).resolve().parents[2] / "data"
+        personas_path = data_dir / "personas.json"
+        seed_path = data_dir / "personas_seed.json"
+        source_path = seed_path if seed_path.exists() else personas_path
+
+        if not source_path.exists():
+            return []
+        try:
+            data = json.loads(source_path.read_text())
+            if not seed_path.exists() and personas_path.exists():
+                seed_path.write_text(personas_path.read_text())
+        except Exception as exc:
+            LOGGER.warning("Unable to load personas.json: %s", exc)
+            return []
+
+        grouped: Dict[str, Dict[str, Any]] = {}
+        for entry in data:
+            tag = entry.get("household_tag") or f"seed-{entry['citizen_id']}"
+            grouped.setdefault(tag, {"tag": tag, "members": []})
+            grouped[tag]["members"].append(entry)
+        ordered = sorted(grouped.values(), key=lambda item: min(member["citizen_id"] for member in item["members"]))
+        return ordered
+
+    def _create_seed_household(
+        self,
+        tile: Tuple[int, int],
+        seed: Dict[str, Any],
+        household_id: int,
+        zone_house_counter: Dict[str, int],
+        job_slots: List[Tuple[Tuple[int, int], Profession]],
+        student_slots: List[Tuple[Tuple[int, int], Profession]],
+    ) -> int:
+        zone = self.city.zone_label(*tile)
+        zone_house_counter.setdefault(zone, 0)
+        address = f"{zone}-{zone_house_counter[zone]:03d}"
+        member_ids: List[int] = []
+
+        for entry in sorted(seed["members"], key=lambda m: m["citizen_id"]):
+            citizen_id = entry["citizen_id"]
+            gender = Gender(entry.get("gender", "female"))
+            age_group = AgeGroup(entry.get("age_group", "adult"))
+            employment_status = EmploymentStatus(entry.get("employment_status", "unemployed"))
+            profession = Profession(entry.get("profession", "none"))
+            job_tile = None
+            schedule = None
+            if employment_status == EmploymentStatus.EMPLOYED:
+                job_tile = self._assign_job_tile(profession, job_slots)
+                schedule = _default_schedule_for_profession(profession)
+                if job_tile is not None:
+                    self.job_assignments.setdefault(job_tile, []).append(citizen_id)
+            elif employment_status == EmploymentStatus.STUDENT:
+                job_tile = self._assign_student_slot(student_slots)
+                schedule = _default_student_schedule()
+                if job_tile is not None:
+                    self.student_assignments.setdefault(job_tile, []).append(citizen_id)
+
+            citizen = Citizen(
+                citizen_id=citizen_id,
+                name=entry["name"],
+                gender=gender,
+                age_group=age_group,
+                employment_status=employment_status,
+                profession=profession,
+                household_id=household_id,
+                home_tile=tile,
+                address=entry.get("address", address),
+                job_tile=job_tile,
+                schedule=schedule,
+                temperament=entry.get("temperament", ""),
+                values=entry.get("values", []),
+                relationships=entry.get("relationships", []),
+                system_prompt=entry.get("system_prompt", ""),
+                memories=entry.get("memories", []),
+                traits=entry.get("traits", {}),
+            )
+            self.citizens[citizen_id] = citizen
+            self._citizen_stage[citizen_id] = DailyStage.HOME
+            member_ids.append(citizen_id)
+
+        household = Household(
+            household_id=household_id,
+            home_tile=tile,
+            member_ids=member_ids,
+            address=address,
+        )
+        self.households[household_id] = household
+        self.households_by_tile.setdefault(tile, []).append(household_id)
+        zone_house_counter[zone] += 1
+        if member_ids:
+            self.household_birth_record[household_id] = date(2026, 1, 1) - timedelta(days=90)
+        return household_id + 1
+
     def _build_population(self) -> None:
         residential_tiles = [
             (x, y)
@@ -65,102 +201,38 @@ class PopulationManager:
         job_slots = self._make_job_slots()
         student_slots = self._make_student_slots()
 
-        citizen_id = 1
-        household_id = 1
         zone_house_counter: Dict[str, int] = {}
-        for tile in residential_tiles:
-            if citizen_id > self.target_population:
+
+        tiles_iter = iter(residential_tiles)
+        household_id = 1
+
+        # seed households first
+        for seed in self._seed_households:
+            try:
+                tile = next(tiles_iter)
+            except StopIteration:
+                LOGGER.warning("Not enough residential tiles for all seed households")
                 break
-            members: List[int] = []
-            zone = self.city.zone_label(*tile)
-            zone_house_counter.setdefault(zone, 0)
-            address = f"{zone}-{zone_house_counter[zone]:03d}"
-
-            adults = self.rng.randint(1, 2)
-            for _ in range(adults):
-                if citizen_id > self.target_population:
-                    break
-                gender = next(self._gender_cycle)
-                age_group = AgeGroup.ADULT
-                if self.rng.random() < 0.15:
-                    age_group = AgeGroup.ELDER
-
-                employment_status = EmploymentStatus.UNEMPLOYED
-                profession = Profession.NONE
-                schedule: Optional[CitizenSchedule] = None
-                job_tile = None
-
-                if age_group == AgeGroup.ELDER:
-                    employment_status = EmploymentStatus.RETIRED
-                elif job_slots:
-                    job_tile, profession = job_slots.pop()
-                    employment_status = EmploymentStatus.EMPLOYED
-                    schedule = _default_schedule_for_profession(profession)
-                    self.job_assignments.setdefault(job_tile, []).append(citizen_id)
-
-                zone = self.city.zone_label(*tile)
-                zone_house_counter.setdefault(zone, 0)
-                address = f"{zone}-{zone_house_counter[zone]:03d}"
-
-                citizen = Citizen(
-                    citizen_id=citizen_id,
-                    name=next(self._name_cycle),
-                    gender=gender,
-                    age_group=age_group,
-                    employment_status=employment_status,
-                    profession=profession,
-                    household_id=household_id,
-                    home_tile=tile,
-                    address=address,
-                    job_tile=job_tile,
-                    schedule=schedule,
-                )
-                self.citizens[citizen_id] = citizen
-                self._citizen_stage[citizen_id] = DailyStage.HOME
-                members.append(citizen_id)
-                citizen_id += 1
-
-            if not members:
-                continue
-
-            if self.rng.random() < 0.35 and citizen_id <= self.target_population:
-                # add a child or teen
-                gender = next(self._gender_cycle)
-                age_group = AgeGroup.CHILD if self.rng.random() < 0.6 else AgeGroup.TEEN
-                employment_status = EmploymentStatus.STUDENT
-                profession = Profession.STUDENT
-                job_tile = student_slots.pop()[0] if student_slots else None
-                schedule = _default_student_schedule()
-                if job_tile is not None:
-                    self.student_assignments.setdefault(job_tile, []).append(citizen_id)
-                citizen = Citizen(
-                    citizen_id=citizen_id,
-                    name=next(self._name_cycle),
-                    gender=gender,
-                    age_group=age_group,
-                    employment_status=employment_status,
-                    profession=profession,
-                    household_id=household_id,
-                    home_tile=tile,
-                    address=address,
-                    job_tile=job_tile,
-                    schedule=schedule,
-                )
-                self.citizens[citizen_id] = citizen
-                self._citizen_stage[citizen_id] = DailyStage.HOME
-                members.append(citizen_id)
-                citizen_id += 1
-
-            zone_house_counter[zone] += 1
-            household = Household(
+            household_id = self._create_seed_household(
+                tile=tile,
+                seed=seed,
                 household_id=household_id,
-                home_tile=tile,
-                member_ids=members,
-                address=address,
+                zone_house_counter=zone_house_counter,
+                job_slots=job_slots,
+                student_slots=student_slots,
             )
-            self.households[household_id] = household
-            self.households_by_tile.setdefault(tile, []).append(household_id)
-            household_id += 1
+
+        if self.citizens:
+            self._next_generated_id = max(self.citizens) + 1
+        else:
+            self._next_generated_id = 1
+        if self.households:
+            self._next_household_id = max(self.households) + 1
+        else:
+            self._next_household_id = 1
+
+        self._unused_job_slots = job_slots
+        self._unused_student_slots = student_slots
 
     def _make_job_slots(self) -> List[Tuple[Tuple[int, int], Profession]]:
         slots: List[Tuple[Tuple[int, int], Profession]] = []
@@ -202,6 +274,42 @@ class PopulationManager:
         self.rng.shuffle(slots)
         return slots
 
+    def _assign_job_tile(
+        self, profession: Profession, job_slots: List[Tuple[Tuple[int, int], Profession]]
+    ) -> Optional[Tuple[int, int]]:
+        for idx, (slot_tile, slot_profession) in enumerate(job_slots):
+            if slot_profession == profession:
+                job_slots.pop(idx)
+                return slot_tile
+        return None
+
+    def _pop_job_slot(
+        self, job_slots: List[Tuple[Tuple[int, int], Profession]]
+    ) -> Tuple[Optional[Tuple[int, int]], Profession]:
+        if not job_slots:
+            return None, Profession.NONE
+        slot_tile, slot_profession = job_slots.pop()
+        return slot_tile, slot_profession
+
+    def _assign_student_slot(
+        self, student_slots: List[Tuple[Tuple[int, int], Profession]]
+    ) -> Optional[Tuple[int, int]]:
+        if not student_slots:
+            return None
+        slot_tile, _ = student_slots.pop()
+        return slot_tile
+
+    def _find_available_student_tile(self) -> Optional[Tuple[int, int]]:
+        for tile, capacity in self.student_capacity.items():
+            assigned = len(self.student_assignments.get(tile, []))
+            if assigned < capacity:
+                return tile
+        if self._unused_student_slots:
+            tile, _ = self._unused_student_slots.pop()
+            self.student_capacity[tile] = self.student_capacity.get(tile, 0) + 1
+            return tile
+        return None
+
     # ------------------------------------------------------------------ update
     def update(self, clock: SimulationClock, dt: float) -> None:
         minute = int(clock.minutes)
@@ -224,6 +332,133 @@ class PopulationManager:
                     sprite.kill()
 
         self.agents.update(dt)
+        self._check_interactions()
+        self._handle_births(clock)
+        self._handle_random_city_events(clock)
+        self._clean_expired_memories(clock)
+
+    def broadcast_event(self, event_summary: str, severity: str, clock: SimulationClock, event_type: str = "") -> None:
+        """Broadcast events to all citizens' memories."""
+        expires_at = clock.current_date + timedelta(days=7)
+        event_id = f"{event_type}_{clock.current_date.isoformat()}_{self.rng.randint(1000, 9999)}"
+        memory_entry = {
+            "event_id": event_id,
+            "timestamp": f"{clock.current_date.isoformat()}T{clock.hour:02d}:{clock.minute:02d}:00",
+            "summary": event_summary,
+            "severity": severity,
+            "tags": ["city_event"],
+            "expires_at": expires_at.isoformat(),
+        }
+        for citizen in self.citizens.values():
+            citizen.memories.append(memory_entry)
+
+    def _clean_expired_memories(self, clock: SimulationClock) -> None:
+        current_time = clock.current_date
+        for citizen in self.citizens.values():
+            citizen.memories = [
+                memory for memory in citizen.memories
+                if memory.get("expires_at") is None or self._parse_expires_date(memory["expires_at"]) > current_time
+            ]
+
+    def _parse_expires_date(self, expires_str: str) -> date:
+        try:
+            return date.fromisoformat(expires_str)
+        except ValueError:
+            # Try parsing as datetime
+            dt = datetime.fromisoformat(expires_str)
+            return dt.date()
+
+    def save_events(self) -> None:
+        path = Path(__file__).resolve().parents[2] / "data" / "events.json"
+        with open(path, 'w') as f:
+            json.dump(self.events_log, f, indent=2)
+
+    def save_to_personas(self) -> None:
+        data = []
+        for citizen in self.citizens.values():
+            citizen_dict = {
+                "citizen_id": citizen.citizen_id,
+                "name": citizen.name,
+                "gender": citizen.gender.value,
+                "age_group": citizen.age_group.value,
+                "employment_status": citizen.employment_status.value,
+                "profession": citizen.profession.value,
+                "household_tag": f"H{citizen.household_id}",
+                "temperament": citizen.temperament,
+                "values": citizen.values,
+                "relationships": citizen.relationships,
+                "system_prompt": citizen.system_prompt,
+                "memories": citizen.memories,
+            }
+            data.append(citizen_dict)
+        path = Path(__file__).resolve().parents[2] / "data" / "personas.json"
+        with open(path, 'w') as f:
+            json.dump(data, f, indent=2)
+
+    def _check_interactions(self) -> None:
+        active_npcs = list(self._active_sprites.values())
+        for i, npc1 in enumerate(active_npcs):
+            for npc2 in active_npcs[i+1:]:
+                dx = npc1.rect.centerx - npc2.rect.centerx
+                dy = npc1.rect.centery - npc2.rect.centery
+                dist = (dx**2 + dy**2)**0.5
+                if dist < 50:  # proximity threshold
+                    # Citizens are close, log for now
+                    LOGGER.info("Citizens %d and %d are interacting (distance: %.1f)", 
+                               npc1.citizen_id, npc2.citizen_id, dist)
+                    # TODO: Start turn-based conversation
+
+    def _handle_births(self, clock: SimulationClock) -> None:
+        if not self.llm:
+            return
+        current_date = clock.current_date
+        if self._last_birth_check_date == current_date:
+            return
+        self._last_birth_check_date = current_date
+
+        for household_id, household in list(self.households.items()):
+            if not self._household_can_have_child(household):
+                continue
+            last_birth = self.household_birth_record.get(household_id)
+            if last_birth and (current_date - last_birth).days < 120:
+                continue
+            if self._home_capacity_remaining(household) <= 0:
+                continue
+            try:
+                self._spawn_child_for_household(household, current_date)
+            except Exception as exc:
+                LOGGER.warning("Failed to spawn child for household %s: %s", household_id, exc)
+
+    def _handle_random_city_events(self, clock: SimulationClock) -> None:
+        current_date = clock.current_date
+        if current_date < self._next_random_event_time:
+            return
+        if self.llm:
+            event = self.rng.choice(self._city_events)
+            event_payload = {
+                "event_type": event["type"],
+                "date": current_date.isoformat(),
+                "location": "city-wide",
+                "description": event["description"],
+                "severity": event["severity"],
+                "involved_citizens": [],
+            }
+            city_log = self.llm.record_city_event(event_payload)
+            if city_log:
+                LOGGER.info("City event (%s): %s", event["type"], city_log.log_entry)
+                self.broadcast_event(city_log.summary, event["severity"], clock, event["type"])
+                # Log to events.json
+                self.events_log.append({
+                    "date": current_date.isoformat(),
+                    "type": event["type"],
+                    "description": event["description"],
+                    "severity": event["severity"],
+                    "log_entry": city_log.log_entry,
+                })
+                self.save_events()
+                self.save_to_personas()
+        # Schedule next event
+        self._next_random_event_time = current_date + timedelta(days=self.rng.randint(2, 7))
 
     def _determine_stage(self, citizen: Citizen, minute: int) -> DailyStage:
         if citizen.schedule is None:
@@ -377,6 +612,155 @@ class PopulationManager:
             "stage": stage.value,
             "relatives": relatives,
         }
+
+    def citizen_summaries(self) -> List[Dict[str, object]]:
+        summaries: List[Dict[str, object]] = []
+        for citizen_id in sorted(self.citizens):
+            citizen = self.citizens[citizen_id]
+            summaries.append(
+                {
+                    "id": citizen.citizen_id,
+                    "name": citizen.name,
+                    "gender": citizen.gender.value,
+                    "age_group": citizen.age_group.value,
+                    "employment": citizen.employment_status.value,
+                    "profession": citizen.profession.value,
+                    "address": citizen.address,
+                    "stage": self._citizen_stage.get(citizen_id, DailyStage.HOME).value,
+                }
+            )
+        return summaries
+
+    def recent_birth_logs(self) -> List[str]:
+        return list(self._recent_birth_events)
+
+    # ---------------------------------------------------------------- births
+    def _household_can_have_child(self, household: Household) -> bool:
+        adults = [
+            self.citizens[mid]
+            for mid in household.member_ids
+            if self.citizens[mid].age_group == AgeGroup.ADULT
+        ]
+        male = any(c.gender == Gender.MALE for c in adults)
+        female = any(c.gender == Gender.FEMALE for c in adults)
+        return male and female
+
+    def _home_capacity_remaining(self, household: Household) -> int:
+        capacity = self.RESIDENTIAL_CAPACITY_PER_TILE
+        occupants = len(household.member_ids)
+        return capacity - occupants
+
+    def _spawn_child_for_household(self, household: Household, current_date: date) -> None:
+        parent_ids = [
+            mid
+            for mid in household.member_ids
+            if self.citizens[mid].age_group in {AgeGroup.ADULT, AgeGroup.ELDER}
+        ]
+        if len(parent_ids) < 2:
+            return
+        parents = [self.citizens[parent_ids[0]], self.citizens[parent_ids[1]]]
+        parent_payload = [
+            {
+                "id": parent.citizen_id,
+                "name": parent.name,
+                "gender": parent.gender.value,
+                "temperament": parent.temperament,
+                "values": parent.values,
+                "memories": parent.memories[-3:],
+            }
+            for parent in parents
+        ]
+        persona = self.llm.generate_child_persona(
+            city_date=current_date.isoformat(),
+            household_address=household.address,
+            parents=parent_payload,
+            recent_events=self._recent_birth_events[-5:],
+        )
+
+        citizen_id = self._next_generated_id
+        self._next_generated_id += 1
+
+        gender = Gender(persona.gender.lower()) if persona.gender.lower() in {"male", "female"} else Gender.FEMALE
+        age_group = AgeGroup(persona.age_group.lower()) if persona.age_group.lower() in {"child", "teen"} else AgeGroup.CHILD
+
+        employment_status = EmploymentStatus.STUDENT
+        profession = Profession.STUDENT
+        job_tile = self._find_available_student_tile()
+        schedule = _default_student_schedule()
+
+        child = Citizen(
+            citizen_id=citizen_id,
+            name=persona.name,
+            gender=gender,
+            age_group=age_group,
+            employment_status=employment_status,
+            profession=profession,
+            household_id=household.household_id,
+            home_tile=household.home_tile,
+            address=household.address,
+            job_tile=job_tile,
+            schedule=schedule,
+            temperament=persona.temperament,
+            values=persona.values,
+            relationships=[
+                {"citizen_id": parents[0].citizen_id, "type": "parent", "strength": 0.8},
+                {"citizen_id": parents[1].citizen_id, "type": "parent", "strength": 0.8},
+            ],
+            system_prompt=(
+                "You are "
+                + persona.name
+                + ", a new child in the city. Remember family context and stay concise."
+            ),
+            memories=[
+                {
+                    "timestamp": f"{current_date.isoformat()}T08:00:00",
+                    "summary": persona.summary,
+                    "severity": "low",
+                    "tags": ["birth", "family"],
+                    "expires_at": None,
+                }
+            ],
+            traits={},
+        )
+        self.citizens[citizen_id] = child
+        self._citizen_stage[citizen_id] = DailyStage.HOME
+        household.member_ids.append(citizen_id)
+        if job_tile is not None:
+            self.student_assignments.setdefault(job_tile, []).append(citizen_id)
+
+        for parent in parents:
+            parent.relationships.append({"citizen_id": citizen_id, "type": "child", "strength": 0.8})
+            parent.memories.append(
+                {
+                    "timestamp": f"{current_date.isoformat()}T08:00:00",
+                    "summary": f"Welcomed {persona.name} into the family.",
+                    "severity": "medium",
+                    "tags": ["birth", "family"],
+                    "expires_at": None,
+                }
+            )
+
+        self.household_birth_record[household.household_id] = current_date
+        log_entry = f"{current_date.isoformat()}: {persona.name} was born at {household.address}."
+        self._recent_birth_events.append(log_entry)
+        if len(self._recent_birth_events) > 20:
+            self._recent_birth_events.pop(0)
+
+        # Log to city narrative
+        if self.llm:
+            event_payload = {
+                "event_type": "birth",
+                "date": current_date.isoformat(),
+                "location": household.address,
+                "description": f"A new citizen, {persona.name}, was born to {parents[0]['name']} and {parents[1]['name']}.",
+                "severity": "low",
+                "involved_citizens": [parents[0]["id"], parents[1]["id"], citizen_id],
+            }
+            city_log = self.llm.record_city_event(event_payload)
+            if city_log:
+                LOGGER.info("City log: %s", city_log.log_entry)
+                # For demo, assume births are low severity, no broadcast
+
 
 
 # ---------------------------------------------------------------------------

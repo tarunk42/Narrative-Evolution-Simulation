@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import enum
-from dataclasses import dataclass
-from typing import Optional, Tuple
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Tuple
 
 
 class Gender(enum.Enum):
@@ -62,6 +62,12 @@ class Citizen:
     address: str
     job_tile: Optional[Tuple[int, int]] = None
     schedule: Optional[CitizenSchedule] = None
+    temperament: str = ""
+    values: List[str] = field(default_factory=list)
+    relationships: List[Dict[str, Any]] = field(default_factory=list)
+    system_prompt: str = ""
+    memories: List[Dict[str, Any]] = field(default_factory=list)
+    traits: Dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
